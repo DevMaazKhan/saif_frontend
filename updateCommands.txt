@@ -1,0 +1,13 @@
+Frontend---------------------
+docker image rm zain_traders_frontend -f
+docker image build -t zain_traders_frontend .
+docker tag zain_traders_frontend devmaazkhan/zain_traders_frontend:latest
+docker push devmaazkhan/zain_traders_frontend:latest
+---------------------------
+
+
+Backend-------------------------------
+docker image rm zain_traders_backend -f
+docker image build -t zain_traders_backend .
+docker tag zain_traders_backend devmaazkhan/zain_traders_backend:latest
+docker push devmaazkhan/zain_traders_backend:latest
