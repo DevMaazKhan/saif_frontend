@@ -59,6 +59,7 @@ const formDefaultValues = {
   paymentType: INVOICE_PAYMENT_TYPES.ON_CASH,
   cashAmount: "",
   id: "",
+  date: moment().format("YYYY-MM-DD"),
 };
 
 const lineItemFormDefaultValues = {
@@ -77,6 +78,7 @@ const formSchema = yup.object().shape({
   lineItems: yup.array().optional(),
   paymentType: yup.string().required(),
   cashAmount: yup.string(),
+  date: yup.string().required(),
 });
 
 const lineItemFormSchema = yup.object().shape({
@@ -376,6 +378,25 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
                       labelKey="nameFull"
                       valueKey="id"
                       searchKey="nameFull"
+                      error={fieldState.error?.message || undefined}
+                    />
+                  )}
+                />
+              </div>
+
+              <div className="w-[300px]">
+                <Controller
+                  name="date"
+                  control={formMethods.control}
+                  render={({ field, fieldState }) => (
+                    <Input
+                      type="date"
+                      value={field.value}
+                      placeholder="Select Date"
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
+                      disabled={!!formMethods.getValues("id")}
                       error={fieldState.error?.message || undefined}
                     />
                   )}
