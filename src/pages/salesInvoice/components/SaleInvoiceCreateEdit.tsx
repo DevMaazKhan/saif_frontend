@@ -56,7 +56,7 @@ const formDefaultValues = {
   customerID: "",
   salesmanID: "",
   lineItems: [],
-  paymentType: INVOICE_PAYMENT_TYPES.ON_CASH,
+  paymentType: '',
   cashAmount: "",
   id: "",
   date: moment().format("YYYY-MM-DD"),
@@ -76,7 +76,7 @@ const formSchema = yup.object().shape({
   salesmanID: yup.string().optional(),
   customerID: yup.string().required("Customer is a required field"),
   lineItems: yup.array().optional(),
-  paymentType: yup.string().required(),
+  paymentType: yup.string(),
   cashAmount: yup.string(),
   date: yup.string().required(),
 });
@@ -139,6 +139,14 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
       toast({
         variant: "destructive",
         title: "At least add 1 item",
+      });
+
+      return;
+    }
+    if (data.paymentType.length === 0) {
+      toast({
+        variant: "destructive",
+        title: "Please select Payment Type",
       });
 
       return;
