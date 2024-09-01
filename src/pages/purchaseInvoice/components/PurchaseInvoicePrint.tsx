@@ -77,7 +77,7 @@ export const PurchaseInvoicePrint = (props: IPurchaseInvoicePrint) => {
                   <Text style={{ fontFamily: LIGHT_FONT, fontSize: SMALL_TEXT }}>{item.name}</Text>
                 </View>
                 <View style={{ width: 90 }}>
-                  <Text style={{ fontFamily: LIGHT_FONT, fontSize: SMALL_TEXT }}>{item.price}</Text>
+                  <Text style={{ fontFamily: LIGHT_FONT, fontSize: SMALL_TEXT }}>{item.qty}</Text>
                 </View>
                 <View style={{ width: 120 }}>
                   <Text style={{ fontFamily: LIGHT_FONT, fontSize: SMALL_TEXT }}>{formatAmount(item.price)}</Text>
