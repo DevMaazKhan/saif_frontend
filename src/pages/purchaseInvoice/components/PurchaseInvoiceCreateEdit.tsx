@@ -60,7 +60,7 @@ const formDefaultValues = {
   id: "",
   companyID: "",
   lineItems: [],
-  paymentType: INVOICE_PAYMENT_TYPES.ON_CASH,
+  paymentType: '',
   cashAmount: "",
   date: moment().format("YYYY-MM-DD"),
 };
@@ -79,7 +79,7 @@ const formSchema = yup.object().shape({
   id: yup.mixed().optional(),
   companyID: yup.string().required("Company is a required field"),
   lineItems: yup.array().optional(),
-  paymentType: yup.string().required(),
+  paymentType: yup.string(),
   cashAmount: yup.string(),
   date: yup.string().required(),
 });
@@ -162,6 +162,15 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
       toast({
         variant: "destructive",
         title: "At least add 1 item",
+      });
+
+      return;
+    }
+
+    if (data.paymentType.length === 0) {
+      toast({
+        variant: "destructive",
+        title: "Please select Payment Type",
       });
 
       return;
@@ -364,6 +373,7 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
                     <Input
                       type="date"
                       value={field.value}
+                      placeholder="Select Date"
                       onChange={(e) => {
                         field.onChange(e.target.value);
                       }}
@@ -390,7 +400,7 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
                   <Controller
                     control={formMethods.control}
                     name="paymentType"
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
                       <RadioGroup
                         className="flex flex-col gap-2 mt-3"
                         value={field.value}
@@ -403,6 +413,7 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
                           }
                         }}
                         tabIndex={hidden ? -1 : 0}
+
                       >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value={INVOICE_PAYMENT_TYPES.PARTIAL} id={INVOICE_PAYMENT_TYPES.PARTIAL} />
@@ -416,6 +427,7 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
                           <RadioGroupItem value={INVOICE_PAYMENT_TYPES.ON_CASH} id={INVOICE_PAYMENT_TYPES.ON_CASH} />
                           <Label htmlFor={INVOICE_PAYMENT_TYPES.ON_CASH}>On Cash</Label>
                         </div>
+                        {fieldState.error?.message || undefined}
                       </RadioGroup>
                     )}
                   />
