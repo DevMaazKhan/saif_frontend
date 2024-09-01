@@ -342,7 +342,7 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
                       field.onChange(option.id);
                     }}
                     disabled={(lineItems?.length || 0) > 0 || !!formMethods.getValues("id")}
-                    options={companies?.responseData.parties || []}
+                    options={companies?.responseData.parties}
                     autoFocus
                     labelKey="nameFull"
                     valueKey="id"

@@ -166,21 +166,23 @@ const ItemStockDashboard = (props: PageProps) => {
               </div>
 
               <div className={`flex flex-row gap-4  ${withProduct ? "opacity-100" : "opacity-40"}`}>
-                <Select
-                  disabled={!withProduct}
-                  onValueChange={(value) => {
-                    setSelectedProduct(value);
-                  }}
-                >
-                  <SelectTrigger className="w-[300px]" autoFocus>
-                    <SelectValue placeholder="Select Product" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {items?.responseData.items?.map((party) => (
-                      <SelectItem value={party.id}>{party.nameFull}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="w-[300px]">
+                  <Combobox
+                    key="selectProduct"
+                    label="Select Product"
+                    placeholder="Select Product"
+                    onChange={(value, option) => {
+                      setSelectedProduct(option.id);
+                    }}
+                    value={selectedProduct || ''}
+                    options={items?.responseData.items || []}
+                    autoFocus
+                    labelKey="nameFull"
+                    valueKey="id"
+                    searchKey="nameFull"
+                    disabled={!withProduct}
+                  />
+                </div>
               </div>
             </div>
             <Table className="mt-3">
