@@ -62,6 +62,7 @@ const formDefaultValues = {
   lineItems: [],
   paymentType: INVOICE_PAYMENT_TYPES.ON_CASH,
   cashAmount: "",
+  date: moment().format("YYYY-MM-DD"),
 };
 
 const lineItemFormDefaultValues = {
@@ -80,6 +81,7 @@ const formSchema = yup.object().shape({
   lineItems: yup.array().optional(),
   paymentType: yup.string().required(),
   cashAmount: yup.string(),
+  date: yup.string().required(),
 });
 const lineItemFormSchema = yup.object().shape({
   itemID: yup.string().required("Company ID is a required field"),
@@ -329,28 +331,48 @@ const PurchaseInvoiceCreateEdit = (props: PageProps) => {
                 </div>
               }
             />
-            <div className="flex flex-1 gap-2 mt-2 w-[300px]">
-              <Controller
-                name="companyID"
-                control={formMethods.control}
-                render={({ field, fieldState }) => (
-                  <Combobox
-                    label="Select Company"
-                    placeholder="Select Company"
-                    value={field.value}
-                    onChange={(value, option) => {
-                      field.onChange(option.id);
-                    }}
-                    disabled={(lineItems?.length || 0) > 0 || !!formMethods.getValues("id")}
-                    options={companies?.responseData.parties || []}
-                    autoFocus
-                    labelKey="nameFull"
-                    valueKey="id"
-                    searchKey="nameFull"
-                    error={fieldState.error?.message || undefined}
-                  />
-                )}
-              />
+            <div className="flex flex-1 gap-2 mt-2">
+              <div className=" w-[300px]">
+                <Controller
+                  name="companyID"
+                  control={formMethods.control}
+                  render={({ field, fieldState }) => (
+                    <Combobox
+                      label="Select Company"
+                      placeholder="Select Company"
+                      value={field.value}
+                      onChange={(value, option) => {
+                        field.onChange(option.id);
+                      }}
+                      disabled={(lineItems?.length || 0) > 0 || !!formMethods.getValues("id")}
+                      options={companies?.responseData.parties || []}
+                      autoFocus
+                      labelKey="nameFull"
+                      valueKey="id"
+                      searchKey="nameFull"
+                      error={fieldState.error?.message || undefined}
+                    />
+                  )}
+                />
+              </div>
+
+              <div className="w-[300px]">
+                <Controller
+                  name="date"
+                  control={formMethods.control}
+                  render={({ field, fieldState }) => (
+                    <Input
+                      type="date"
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
+                      disabled={!!formMethods.getValues("id")}
+                      error={fieldState.error?.message || undefined}
+                    />
+                  )}
+                />
+              </div>
             </div>
 
             <div className="flex flex-row gap-3 mt-3">
