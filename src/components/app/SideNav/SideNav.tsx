@@ -67,6 +67,9 @@ const SideNav = memo(() => {
 
   return (
     <div className={twMerge(`fixed top-0 bg-white h-full z-10 border-r-2 border-primary/50 sidebar`)}>
+      <div className="p-2">
+        <img className="w-[60px]" src="./zain.png" />
+      </div>
       <SideNavMenuList />
 
       <input type="file" ref={inputRef} style={{ display: "none" }} accept=".zip" onChange={onBackupUpload} />
